@@ -2,6 +2,8 @@ package com.pawan.assignment.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import java.util.List;
  */
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
+    public static final String RUPEE = "₹ ";
     private Context context;
     private List<Data> datas = new ArrayList<>();
 
@@ -47,9 +50,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Data data = datas.get(position);
         holder.textViewTitle.setText(data.getTitle());
         holder.textViewDescription.setText(data.getSecondaryTitle());
-        holder.textViewPrice.setText(data.getRent()+"");
-        holder.textViewSize.setText(data.getOwnerName());
-        holder.textViewFeature.setText(data.getCity());
+        holder.textViewPrice.setText(RUPEE + data.getRent());
+        holder.textViewSize.setText(data.getCity());
+        String textString = getFurnished(data.getFurnishing()) + System.getProperty("line.separator") +getRoomType(data.getType());
+        holder.textViewFeature.setText(textString);
+        if(holder.textViewTitle.getText().length() > 28) {
+            String string = holder.textViewTitle.getText().toString().substring(0, 28);
+            holder.textViewTitle.setText(string + "...");
+        }
+
+        if(holder.textViewDescription.getText().length() > 58) {
+            String string = holder.textViewDescription.getText().toString().substring(0, 58);
+            holder.textViewDescription.setText(string + "...");
+        }
+        holder.textViewPrice.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        holder.textViewSize.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        holder.textViewFeature.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         String url = "http://d3snwcirvb4r88.cloudfront.net/images/";
         try {
             if (data.getPhotos() != null) {
@@ -83,5 +99,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             textViewSize = (TextView) itemView.findViewById(R.id.text_view_size);
             imageViewItem = (ImageView) itemView.findViewById(R.id.image_view_item);
         }
+    }
+
+    private String getRoomType(String type) {
+        String roomType = "";
+
+        if(type.equals("BHK2")) {
+            roomType = "2 Bathrooms";
+        } else if(type.equals("BHK3")) {
+            roomType = "3 Bathrooms";
+        } else if(type.equals("BHK4")) {
+            roomType = "4 Bathrooms";
+        }
+        return roomType;
+    }
+
+    private String getFurnished(String furnishing) {
+        String furnished = "";
+        if(furnishing.equals("SEMI_FURNISHED")) {
+            furnished = "Semi Furnished";
+        } else if(furnishing.equals("FULLY_FURNISHED")) {
+            furnished = "Fully Furnished";
+        }
+        return furnished;
     }
 }
