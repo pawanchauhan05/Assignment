@@ -9,6 +9,12 @@ import android.content.Context;
 
 public class Utils {
 
+    /**
+     * to generate progress dialog
+     * @param title - progress dialog title
+     * @param message - progress dialog title
+     * @param progressDialog - progress dialog instance
+     */
     public static void generateProgressDialog(String title, String message, ProgressDialog progressDialog) {
         progressDialog.setTitle(title);
         progressDialog.setMessage(message);
@@ -16,7 +22,11 @@ public class Utils {
         progressDialog.setCancelable(true);
     }
 
-    public static void hideProgressBar(ProgressDialog progressDialog) {
+    /**
+     * to hide Progress Dialog
+     * @param progressDialog
+     */
+    public static void hideProgressDialog(ProgressDialog progressDialog) {
         try {
             if (progressDialog != null)
                 progressDialog.cancel();
