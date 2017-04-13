@@ -14,15 +14,13 @@ import rx.Observable;
  */
 public interface CustomService {
 
-    @GET(Constants.Get_DATA)
-    Observable<Response> getDataFromServer();
 
-    @GET("api/v1/property/filter/region/ChIJLfyY2E4UrjsRVq4AjI7zgRY/")
-    Observable<Response> getDataServer(
+    @GET(Constants.GET_DATA_FROM_SERVER)
+    Observable<Response> getDataFromServer(
             @QueryMap Map<String, Object> options
     );
 
-    @GET("api/v1/property/filter/region/ChIJLfyY2E4UrjsRVq4AjI7zgRY/")
+    @GET(Constants.GET_DATA_FROM_SERVER)
     Observable<Response> getFilterDataFromServer(
             @QueryMap Map<String, Object> options
     );
